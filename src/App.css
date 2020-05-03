@@ -20,7 +20,6 @@ body {
 input{
   padding: 0.375rem 0.75rem;
   height: 2.375rem;
-  border: 1px solid #ced4da;
   border-radius: 0.25rem;
   font-size: 1rem;
   margin-bottom: .5rem;
@@ -44,6 +43,10 @@ select{
   align-items: center;
   height: 100%;
   background-color: #cddbe7;
+}
+#radioGroup{
+  display: inline-block;
+
 }
 #submit{
   margin-top: 15px;

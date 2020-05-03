@@ -17,11 +17,12 @@ class Form extends Component{
 
     };
     this.onNameChange = this.onNameChange.bind(this);
+    this.onEmailChange = this.onEmailChange.bind(this);
   }
 
   onNameChange(event) {
 
-    const validName = /([^0-9]+)$/
+    const validName = /^[a-zA-Z]+$/;
     const isValid = validName.test(event.target.value);
 
     if(isValid){
@@ -30,38 +31,86 @@ class Form extends Component{
       this.setState({name: event.target.value, errors: {name: true}});
 
     }
-
   }
 
+  onEmailChange(event){
+
+    const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const isValid = validEmail.test(event.target.value);
+
+    if(isValid){
+      this.setState({email: event.target.value, errors: {email: false}});
+    }else{
+      this.setState({email: event.target.value, errors: {email: true}});
+    }
+  }
+
+  handleClick(e){
+
+  }
 
   render(){
 
   //  const errors = this.state.errors.name;
+  let x = false;
     let msg;
-    if(this.state.errors.name ){
+    let msg2;
+    if(this.state.errors.name && this.state.name){
       console.log('error');
-      msg = <span className='error'>Error{this.state.errors.name}</span>
+      msg = <span className='error'>Please enter a valid name</span>
+    }
+
+    if(this.state.errors.email && this.state.email){
+      msg2 =<span className='error'>Please enter a valid email</span>;
     }
 
     return(
       <div class="input-div">
 
-        <label>Name:</label>
-        <input id="name" type="text" placeholder="Enter your name" required onChange={this.onNameChange}></input>
         {msg}
+        <label>Name:</label>
+        <input id="name"
+          type="text"
+          placeholder="Enter your name"
+          required onChange={this.onNameChange}
+          style= {this.state.errors.name && this.state.name ? {border: "3px solid #ff0000"}: null}>
+        </input>
+        {msg2}
         <label>Email:</label>
-        <input id="email" type="email" placeholder="Enter your Email" required></input>
+        <input id="email"
+          style= {this.state.errors.email && this.state.email ? {border: "3px solid #ff0000"}: null}
+          type="email"
+          placeholder="Enter your Email"
+          required onChange={this.onEmailChange}>
+        </input>
+
         <label>Age:</label>
-        <input id="age" type="number" placeholder="Age" min="1" max="100"></input>
+        <input id="age"
+          type="number"
+          placeholder="Age"
+          min="1"
+          max="100">
+          </input>
 
         <label>Please select an option:</label>
 
-        <label for="option1">Option1</label>
-        <input id="option1" value="option1" name="options" type="radio"></input>
-        <label for="option2">Option2</label>
-        <input id="option2" value="option2" name="options" type="radio"></input>
-        <label for="option3">Option3</label>
-        <input id="option3" value="option3" name="options" type="radio"></input>
+
+{/*
+        <div id="radioGroup">
+          <input id="option1" value="Hello" name="options" type="radio"/>
+          <label id="option12" for="Hello">Hello</label>
+        </div>
+
+
+          <input id="option2" value="Goodbye" name="options" type="radio"/>
+
+
+          <input id="option3" value="Yo" name="options" type="radio"/>
+
+        */}
+
+
+
 
         <select>
           <option value="student">Student</option>
