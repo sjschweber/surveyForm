@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import './App.css';
+import {setName} from './actions/index.js'
+import {setEmail} from './actions/index.js'
 
+import { connect } from 'react-redux'
+//console.log(this.props.store)
 class Form extends Component{
 
   constructor(props){
@@ -8,7 +12,6 @@ class Form extends Component{
     this.state = {
       age: 0,
       email: "",
-      name: "",
       errors:
         {
         email: '',
@@ -22,27 +25,14 @@ class Form extends Component{
 
   onNameChange(event) {
 
-    const validName = /^[a-zA-Z]+$/;
-    const isValid = validName.test(event.target.value);
+      this.props.setName(event.target.value);
 
-    if(isValid){
-      this.setState({name: event.target.value, errors: {name: false}});
-    }else{
-      this.setState({name: event.target.value, errors: {name: true}});
-
-    }
   }
 
   onEmailChange(event){
 
-    const validEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    const isValid = validEmail.test(event.target.value);
+    this.props.setEmail(event.target.value);
 
-    if(isValid){
-      this.setState({email: event.target.value, errors: {email: false}});
-    }else{
-      this.setState({email: event.target.value, errors: {email: true}});
-    }
   }
 
   handleClick(e){
@@ -73,12 +63,12 @@ class Form extends Component{
           type="text"
           placeholder="Enter your name"
           required onChange={this.onNameChange}
-          style= {this.state.errors.name && this.state.name ? {border: "3px solid #ff0000"}: null}>
+          style= {this.props.errors.name ? {border: "3px solid #ff0000"}: null}>
         </input>
         {msg2}
         <label>Email:</label>
         <input id="email"
-          style= {this.state.errors.email && this.state.email ? {border: "3px solid #ff0000"}: null}
+          style= {this.props.errors.email ? {border: "3px solid #ff0000"}: null}
           type="email"
           placeholder="Enter your Email"
           required onChange={this.onEmailChange}>
@@ -132,4 +122,13 @@ class Form extends Component{
 }
 
 
-export default Form;
+const mapStateToProps = state => ({name: state.name, errors: state.errors, email: state.email});
+const mapDispatchToProps = dispatch =>{
+  return{
+    setName: (name) => dispatch(setName(name)),
+    setEmail: (email) => dispatch(setEmail(email))
+  }
+} //({setName: (name) => dispatch(setName(name)), setEmail: (email) => dispatch(setEmail(email))});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
