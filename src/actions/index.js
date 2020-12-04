@@ -40,5 +40,20 @@ export function setEmail(text){
 }
 
 export function getName(){
-  return fetch('http://localhost:3002/name').then(response => response.json()).then(response => console.log(response));
+  return fetch('http://localhost:3002/name').then(response => response.text()).then(text => console.log(text));
+}
+
+export function postName(text){
+  var name = {
+    name: text
+  };
+  return fetch('http://localhost:3002/name', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(name),
+  })
+  .then(response => response.text())
+  .then(data => console.log(data))
 }

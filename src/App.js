@@ -11,10 +11,10 @@ function App() {
 
       <div id="title-div">
         <h1 id="title">Survey Form</h1>
-        <p id="description">This is a fun short survey form created with React</p>
+        <p id="description">This is a short form created with React</p>
       </div>
 
-      
+
         <Form/>
 
     </div>

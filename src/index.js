@@ -7,7 +7,7 @@ import { createStore } from 'redux';
 import {surveyForm} from './reducers';
 import * as serviceWorker from './serviceWorker';
 import ReduxThunk from 'redux-thunk';
-import {getName} from './actions/index.js'
+import {getName, postName} from './actions/index.js'
 
 const store = createStore(surveyForm, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 

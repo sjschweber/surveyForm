@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import {setName} from './actions/index.js'
+import {setName, postName} from './actions/index.js'
 import {setEmail} from './actions/index.js'
 
 import { connect } from 'react-redux'
@@ -19,13 +19,16 @@ class Form extends Component{
         }
 
     };
+
     this.onNameChange = this.onNameChange.bind(this);
     this.onEmailChange = this.onEmailChange.bind(this);
+
   }
 
   onNameChange(event) {
 
       this.props.setName(event.target.value);
+      postName(event.target.value);
 
   }
 
@@ -45,26 +48,32 @@ class Form extends Component{
   let x = false;
     let msg;
     let msg2;
+
     if(this.state.errors.name && this.state.name){
       console.log('error');
       msg = <span className='error'>Please enter a valid name</span>
+
     }
 
     if(this.state.errors.email && this.state.email){
       msg2 =<span className='error'>Please enter a valid email</span>;
+
     }
+
 
     return(
       <div class="input-div">
 
         {msg}
-        <label>Name:</label>
+
+        <label>First name:</label>
         <input id="name"
           type="text"
           placeholder="Enter your name"
           required onChange={this.onNameChange}
           style= {this.props.errors.name ? {border: "3px solid #ff0000"}: null}>
         </input>
+
         {msg2}
         <label>Email:</label>
         <input id="email"
@@ -84,24 +93,6 @@ class Form extends Component{
 
         <label>Please select an option:</label>
 
-
-{/*
-        <div id="radioGroup">
-          <input id="option1" value="Hello" name="options" type="radio"/>
-          <label id="option12" for="Hello">Hello</label>
-        </div>
-
-
-          <input id="option2" value="Goodbye" name="options" type="radio"/>
-
-
-          <input id="option3" value="Yo" name="options" type="radio"/>
-
-        */}
-
-
-
-
         <select>
           <option value="student">Student</option>
           <option value="full-time">Full Time</option>
@@ -113,7 +104,7 @@ class Form extends Component{
         <textarea id="paragraph-input" cols='10' rows='10'/>
 
 
-        <input id="submit" type="submit"></input>
+        <input id="submit" type="submit" disabled={ (!this.props.errors.email && this.props.email) && (!this.props.errors.name && this.props.name) ? false: true}></input>
 
 
       </div>
